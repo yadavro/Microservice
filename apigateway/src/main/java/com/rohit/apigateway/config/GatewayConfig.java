@@ -29,7 +29,12 @@ public class GatewayConfig {
                                 .requestRateLimiter(config -> {
                                     config.setRateLimiter(redisRateLimiter());
                                     config.setKeyResolver(userKeyResolver);
-                                }))
+                                })
+                                .circuitBreaker(c->{
+                                    c.setName("userServiceCB");
+                                    c.setFallbackUri("forward:/fallback/users");
+                                })
+                        )
                         .uri("http://localhost:8081"))
                 .build();
     }

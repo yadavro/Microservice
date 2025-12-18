@@ -24,6 +24,7 @@ spring:
                 redis-rate-limiter.requestedTokens: 1
                 key-resolver: "#{@userKeyResolver}"
 
+
         - id: order-service
           uri: http://localhost:8082
           predicates:
@@ -47,3 +48,21 @@ logging:
     org.springframework.cloud.gateway: DEBUG
     org.springframework.cloud.gateway.filter.factory.RequestRateLimiterGatewayFilterFactory: DEBUG
     org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,circuitbreakers,metrics
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      userServiceCB:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
