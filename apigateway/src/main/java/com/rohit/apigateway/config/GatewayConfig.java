@@ -35,7 +35,7 @@ public class GatewayConfig {
                                     c.setFallbackUri("forward:/fallback/users");
                                 })
                         )
-                        .uri("http://localhost:8081"))
+                        .uri("lb://USER-SERVICE"))
                 .build();
     }
 
