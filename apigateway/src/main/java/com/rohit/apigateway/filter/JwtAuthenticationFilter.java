@@ -56,7 +56,7 @@ public class JwtAuthenticationFilter implements GatewayFilter {
             return exchange.getResponse().setComplete();
         }
 
-        // 4. Forward username to downstream service as header
+        // 4. Forward username and role to downstream service as header
         ServerHttpRequest mutatedRequest = exchange
                 .getRequest()
                 .mutate()
